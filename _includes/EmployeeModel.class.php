@@ -115,7 +115,7 @@ class EmployeeModel
         job => $record->job,
         wage => $record->wage,
         room => $record->room,
-        login => $record->login,
+        // login => $record->login,
         admin => $record->admin
         );
     }
