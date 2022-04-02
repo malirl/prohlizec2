@@ -1,0 +1,28 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>No.</th>
+        <th>Phone</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#rooms}}
+        <tr>
+            <td><a href="{{ roomDetailName }}?room_id={{ room_id }}">{{ name }}</a></td>
+            <td>{{ no }}</td>
+            {{#phone}}<td>{{ phone }}</td>{{/phone}}
+            {{^phone}}<td>-</td>{{/phone}}
+            <td>
+              <a href="update.php?room_id={{ room_id }}" class="btn btn-info {{^allowEdit}} disabled {{/allowEdit}}">Update</a>
+              <form action="delete.php?room_id={{ room_id }}" method="post" onsubmit="return confirm('Really delete?\n\n this action cannot be undone!');" style="display: inline-block;">
+                <input type="hidden" name="room_id" value="{{ room_id }}" />
+                <input type="submit" value="Delete" class="btn btn-danger {{^allowEdit}} disabled {{/allowEdit}}">
+              </form>
+          </td>
+        </tr>
+    {{/rooms}}
+    </tbody>
+</table>
+<a href="create.php" class="btn btn-info {{^allowEdit}} disabled {{/allowEdit}}">Create</a>

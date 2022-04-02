@@ -1,0 +1,17 @@
+<form method="post">
+
+    <div class="my-2">
+        <label for="login">Login</label>
+        <input id="login" name="login" class="form-control" type="text" value="{{login}}"/><!--mělo by být required-->
+        <div class="form-text text-warning">{{errors.login}}</div>
+    </div>
+    <div class="my-2">
+        <label for="pswd">Password</label>
+        <input id="pswd" name="pswd" class="form-control" type="password" value=""/><!--mělo by být required-->
+        <div class="form-text text-warning">{{errors.pswd}}</div>
+    </div>
+
+    <div class="my-2">
+        <input type="submit" value="Přihlásit se" class="btn btn-primary" />
+    </div>
+</form>

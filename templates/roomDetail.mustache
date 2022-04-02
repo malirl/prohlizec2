@@ -1,0 +1,49 @@
+{{# room }}
+
+<h1>Místnost č. {{no}}</h1>
+
+<dl class='dl-horizontal'>
+
+
+
+<dt>Číslo</dt>
+<dd>{{no}}</dd>
+<dt>Název</dt>
+<dd>{{name}}</dd>
+<dt>Telefon</dt>
+<dd>{{phone}}</dd>
+{{^phone}}
+<dd>--</dd>
+{{/phone}}
+<dt>Průměrná mzda</dt>
+<dd>{{avgWage}}</dd>
+{{^avgWage}}
+<dd>--</dd>
+{{/avgWage}}
+
+<dt>Lidé</dt>
+{{#people}}
+<dd><a href='../employee/employeeDetail.php?employee_id={{id}}'>{{name}}</a></dd>
+{{/people}}
+
+{{^people}}
+<dd>--</dd>
+{{/people}}
+
+
+<dt>Klíče</dt>
+{{#keys}}
+<dd><a href='../employee/employeeDetail.php?employee_id={{id}}'>{{name}}</a></dd>
+{{/keys}}
+
+{{^keys}}
+<dd>--</dd>
+{{/keys}}
+
+</dl>
+
+<a href='index.php'>
+<span class='glyphicon glyphicon-arrow-left' aria-hidden='true'></span>
+Zpět na seznam místností
+</a>
+{{/room }}
