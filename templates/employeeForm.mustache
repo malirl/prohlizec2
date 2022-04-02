@@ -8,6 +8,7 @@
         <h1>Update zaměstnance</h1>
       {{/update}}
     </legend>
+    <input type="hidden" name="employee_id" value="{{ employee_id }}" />
 
 
     <div class="my-2">
@@ -50,9 +51,9 @@
               <div class="form-group">
                 <label for="room">room</label>
                 <select class="form-control" id="room" name="room">
-                  {{#keys}}
-                    <option value="{{room_id}}">{{name}}</option>
-                  {{/keys}}
+                  {{#rooms}}
+                    <option value="{{id}}">{{name}}</option>
+                  {{/rooms}}
                 </select>
               </div>
               {{#errors.room}}
@@ -100,9 +101,9 @@
             {{#create}}
             <label for="rooms">Klíče</label>
             <select name="roomsForKeys[]" id="rooms" class="form-select" size="15" id="choices-multiple-remove-button" multiple>
-              {{#rooms}}
+              {{#keys}}
                 <option value="{{room_id}}">{{name}}</option>
-              {{/rooms}}
+              {{/keys}}
             </select>
             {{/create}}
 

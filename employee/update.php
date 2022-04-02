@@ -43,7 +43,7 @@ final class Page extends BaseDBPage
 
             $this->employee = EmployeeModel::getFromPost();
             if ($this->employee->validate()) {
-                if ($this->employee->insert()) {
+                if ($this->employee->update()) {
                     $this->key = new KeyModel();
                     foreach ($this->employee->keys as $key => $room_id) {
                         if (!$this->key->insert($this->employee->employee_id, (int)$room_id)) {
@@ -109,17 +109,36 @@ final class Page extends BaseDBPage
     protected function body(): string
     {
 
+        $getRooms = RoomModel::getAll();
+        while ($row = $getRooms->fetch()) {
+            $rooms[$row->room_id] = [
+            id => $row->room_id,
+            name => $row->name
+            ];
+        }
+
+
+
+        unset($rooms[$this->employee->room]);
+
+        array_unshift(
+            $rooms,
+            [
+            id => $this->employee->room,
+            name => RoomModel::getById($this->employee->room)[name]
+            ]
+        );
 
 
         if ($this->state === self::STATE_FORM_REQUESTED) {
             return $this->m->render(
                 "employeeForm", [
                 "employee"=>$this->employee->params,
-                "rooms"=> RoomModel::getAll(),
+                "rooms"=> $rooms,
                 "keys"=> RoomModel::getAll(),
                 "errors"=>$this->employee->getValidationErrors(),
                 "update"=>true,
-                "test" => $this->test
+                "employee_id" => $_GET["employee_id"]
                 ]
             );
 

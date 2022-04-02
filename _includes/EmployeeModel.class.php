@@ -79,7 +79,7 @@ class EmployeeModel
     public function update() : bool
     {
         try {
-            $sql = "UPDATE room SET name=:name, surname=:surname, job=:job, wage=:wage, room=:room, login=:login, pswd=:pswd WHERE employee_id=:employee_id";
+            $sql = "UPDATE employee SET name=:name, surname=:surname, job=:job, wage=:wage, room=:room, login=:login, pswd=:pswd, admin=:admin WHERE employee_id=:employee_id";
             $stmt = DB::getConnection()->prepare($sql);
             $stmt->bindParam(':employee_id', $this->employee_id);
             $stmt->bindParam(':name', $this->name);
@@ -89,6 +89,7 @@ class EmployeeModel
             $stmt->bindParam(':room', $this->room);
             $stmt->bindParam(':login', $this->login);
             $stmt->bindParam(':pswd', $this->pswd);
+            $stmt->bindParam(':admin', $this->admin, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (\Exception $e) {
             return false;
@@ -99,7 +100,7 @@ class EmployeeModel
     public function getById($employee_id = null)
     {
         $employee_id = $employee_id ?: $this->employee_id;
-        $stmt = DB::getConnection()->prepare("SELECT employee.name AS name, employee.surname AS surname, room.name AS room, room.phone AS phone, employee.job AS job, employee_id, wage, login, admin FROM employee LEFT JOIN room ON employee.room = room.room_id WHERE employee_id=:employee_id");
+        $stmt = DB::getConnection()->prepare("SELECT employee.name AS name, employee.surname AS surname, room, room.phone AS phone, employee.job AS job, employee_id, wage, login, admin FROM employee LEFT JOIN room ON employee.room = room.room_id WHERE employee_id=:employee_id");
         $stmt->bindParam(':employee_id', $employee_id);
         $stmt->execute();
         $record = $stmt->fetch();
@@ -115,7 +116,7 @@ class EmployeeModel
         job => $record->job,
         wage => $record->wage,
         room => $record->room,
-        // login => $record->login,
+        login => $record->login,
         admin => $record->admin
         );
     }
