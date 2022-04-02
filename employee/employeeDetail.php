@@ -9,6 +9,7 @@ final class Page extends BaseDBPage
     {
         parent::__construct();
         $this->title = "Employee detail";
+
     }
 
     protected function body(): string

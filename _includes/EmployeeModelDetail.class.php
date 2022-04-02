@@ -19,6 +19,12 @@ class EmployeeModelDetail extends EmployeeModel
     public function getById()
     {
         $model = parent::getById();
+
+        $stmt = DB::getConnection()->prepare("SELECT name FROM `room` WHERE room_id=:room_id");
+        $stmt->bindParam(':room_id', $model[room]);
+        $stmt->execute();
+        $model[room] = $stmt->fetch()->name;
+
         $stmt = DB::getConnection()->prepare("SELECT name, room_id FROM `key` k JOIN room r on k.room = r.room_id AND k.employee=:employee_id ORDER BY name");
         $stmt->bindParam(':employee_id', $this->employee_id);
         $stmt->execute();
