@@ -1,4 +1,2 @@
-#
-- [ ] Pro přístup ke kterékoli stránce bude potřeba, aby se uživatel přihlásil jménem a heslem. </br>
-Do databáze přidejte v tabulce employee sloupce "login", "password" (řetězce) a "admin" (bool).
-</br> Uživatelé s oprávněním admin mohou editovat, ostatní jen prohlížet a měnit vlastní heslo, nepřihlášení uživatelé neuvidí nic.
+Každá stránka prohlížeče volá v konstruktoru potomka BaseDBPage a nastavuje OPERATION:EDIT/OPERATION_VIEW/OPERATION_NONE atd. Pokud není předán parametr, bere se v úvahu OPERATION_VIEW. Pokud nemá uživatel daný přístup, stránka se mu nevyrenderuje ani cokoli jinýho (neprovede se mazání, editace..), a přesměruje ho na login page.
+<br>Mazání funguje, když je nastaveno CASCADE cizích klíčů v tabulke key.
