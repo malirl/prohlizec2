@@ -22,7 +22,7 @@
               <input id="name" name="name" class="form-control" type="text" value="{{room.name}}" />
               <!--mělo by být required-->
               {{#errors.name}}
-                <div class="form-text text-warning">{{errors.name}}</div>
+                <div class="form-text text-danger">{{errors.name}}</div>
               {{/errors.name}}
             </div>
             <div class="my-2">
@@ -30,14 +30,14 @@
               <input id="no" name="no" class="form-control" type="text" value="{{room.no}}" />
               <!--mělo by být required-->
               {{#errors.no}}
-                <div class="form-text text-warning">{{errors.no}}</div>
+                <div class="form-text text-danger">{{errors.no}}</div>
               {{/errors.no}}
             </div>
             <div class="my-2">
               <label for="phone">Phone</label>
               <input id="phone" name="phone" class="form-control" type="text" value="{{room.phone}}" />
               {{#errors.phone}}
-                <div class="form-text text-warning">{{errors.phone}}</div>
+                <div class="form-text text-danger">{{errors.phone}}</div>
               {{/errors.phone}}
 
             </div>

@@ -120,19 +120,26 @@ final class Page extends BaseDBPage
                 "errors"=>$this->employee->getValidationErrors(),
                 "update"=>true,
                 "test" => $this->test
-                // "test" => [
-                //   ["a" => "ano", b => "ne"],
-                //   [a => "ne", b => "ano"]
-                //
-                // ]
                 ]
             );
 
         } elseif ($this->state === self::STATE_REPORT_RESULT) {
             if ($this->result === self::RESULT_SUCCESS) {
-                return $this->m->render("reportSuccess", ["data"=>"Room updated successfully"]);
+                return $this->m->render(
+                    "reportSuccess",
+                    ["data"=>"Employee updated successfully",
+                    "link" => "./",
+                    "name" => "employee list"
+                    ]
+                );
             } else {
-                return $this->m->render("reportFail", ["data"=>"Room creation failed. Please contact adiministrator or try again later."]);
+                return $this->m->render(
+                    "reportFail",
+                    ["data"=>"Employee update failed. Please contact adiministrator or try again later.",
+                    "link" => "./",
+                    "name" => "employee list"
+                    ]
+                );
             }
 
         }

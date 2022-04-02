@@ -105,9 +105,21 @@ final class Page extends BaseDBPage
             );
         } elseif ($this->state === self::STATE_REPORT_RESULT) {
             if ($this->result === self::RESULT_SUCCESS) {
-                return $this->m->render("reportSuccess", ["data"=>"Room created successfully"]);
+                return $this->m->render(
+                    "reportSuccess",
+                    ["data"=>"Employee created successfully",
+                    "link" => "./",
+                    "name" => "employee list"
+                    ]
+                );
             } else {
-                return $this->m->render("reportFail", ["data"=>"Room creation failed. Please contact adiministrator or try again later."]);
+                return $this->m->render(
+                    "reportFail",
+                    ["data"=>"Employee creation failed. Please contact adiministrator or try again later.",
+                    "link" => "./",
+                    "name" => "employee list"
+                    ]
+                );
             }
 
         }

@@ -55,9 +55,21 @@ final class Page extends BaseDBPage
     {
         if ($this->state === self::STATE_REPORT_RESULT) {
             if ($this->result === self::RESULT_SUCCESS) {
-                return $this->m->render("reportSuccess", ["data"=>"Room deleted successfully"]);
+                return $this->m->render(
+                    "reportSuccess",
+                    ["data"=>"Employee deleted successfully",
+                    "link" => "./",
+                    "name" => "employee list"
+                    ]
+                );
             } else {
-                return $this->m->render("reportFail", ["data"=>"Room deletion failed. Please contact adiministrator or try again later."]);
+                return $this->m->render(
+                    "reportFail",
+                    ["data"=>"Employee deletion failed. Please contact adiministrator or try again later.",
+                    "link" => "./",
+                    "name" => "employee list"
+                    ]
+                );
             }
         }
         return "";

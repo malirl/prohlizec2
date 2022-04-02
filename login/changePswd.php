@@ -32,8 +32,6 @@ final class Page extends BaseDBPage
                 $this->redirect($this->result);
             }
         }
-
-
     }
 
 
@@ -57,22 +55,22 @@ final class Page extends BaseDBPage
 
     protected function body(): string
     {
-
         if ($this->state === self::STATE_REPORT_RESULT
             && $this->result === self::RESULT_SUCCESS
         ) {
             return $this->m->render(
                 "reportSuccess",
-                ["data" => "heslo úspěšně změněno"]
+                [
+                  "data" => "heslo úspěšně změněno",
+                  "link" => $_SERVER['DOCUMENT_ROOT'],
+                  "name" => "homepage"
+                ]
             );
         }
 
         return $this->m->render(
             "formChangePswd",
             ["errors" => ($this->state === self::STATE_FORM_REQUESTED) ? [] : $this->login->getValidationErrors()]
-            // $this->login->getValidationErrors()
-            // $this->login->validationErrors
-            // $this->login->getValidationErrors()
         );
 
     }
