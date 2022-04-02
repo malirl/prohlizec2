@@ -99,7 +99,7 @@ class EmployeeModel
     public function getById($employee_id = null)
     {
         $employee_id = $employee_id ?: $this->employee_id;
-        $stmt = DB::getConnection()->prepare("SELECT employee.name AS name, employee.surname AS surname, room.name AS room, room.phone AS phone, employee.job AS job, employee_id, wage, admin FROM employee LEFT JOIN room ON employee.room = room.room_id WHERE employee_id=:employee_id");
+        $stmt = DB::getConnection()->prepare("SELECT employee.name AS name, employee.surname AS surname, room.name AS room, room.phone AS phone, employee.job AS job, employee_id, wage, login, admin FROM employee LEFT JOIN room ON employee.room = room.room_id WHERE employee_id=:employee_id");
         $stmt->bindParam(':employee_id', $employee_id);
         $stmt->execute();
         $record = $stmt->fetch();
@@ -115,6 +115,7 @@ class EmployeeModel
         job => $record->job,
         wage => $record->wage,
         room => $record->room,
+        login => $record->login,
         admin => $record->admin
         );
     }
