@@ -80,12 +80,14 @@ class RoomModel
 
     public static function deleteById(int $room_id) : bool
     {
-        $sql = "DELETE FROM room WHERE room_id=:room_id";
-
-        $stmt = DB::getConnection()->prepare($sql);
-        $stmt->bindParam(':room_id', $room_id);
-
-        return $stmt->execute();
+        try {
+            $sql = "DELETE FROM room WHERE room_id=:room_id";
+            $stmt = DB::getConnection()->prepare($sql);
+            $stmt->bindParam(':room_id', $room_id);
+            return $stmt->execute();
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function delete() : bool

@@ -29,7 +29,7 @@ final class Page extends BaseDBPage
             if ($this->result === self::RESULT_SUCCESS) {
                 $this->title = "Room deleted";
             } else {
-                $this->title = "Room deletion failed";
+                $this->title = "Room deletion failed.";
             }
             return;
         }
