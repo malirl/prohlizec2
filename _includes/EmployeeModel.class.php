@@ -36,6 +36,15 @@ class EmployeeModel
         $this->params = $params;
     }
 
+    public function hash($pswd)
+    {
+        return password_hash(
+            $pswd, PASSWORD_BCRYPT,
+            [
+            'cost' => 10
+            ]
+        );
+    }
 
     public function insert() : bool
     {
@@ -49,15 +58,9 @@ class EmployeeModel
             $stmt->bindParam(':room', $this->room);
             $stmt->bindParam(':login', $this->login);
 
-            $pass_hash = password_hash($this->pswd, PASSWORD_BCRYPT, $options);
             $stmt->bindParam(
                 ':pswd',
-                password_hash(
-                    $this->pswd, PASSWORD_BCRYPT,
-                    $options = [
-                    'cost' => 10
-                    ]
-                )
+                $this->hash($this->pswd)
             );
 
             $stmt->bindParam(':admin', $this->admin, PDO::PARAM_INT);
@@ -88,7 +91,10 @@ class EmployeeModel
             $stmt->bindParam(':wage', $this->wage);
             $stmt->bindParam(':room', $this->room);
             $stmt->bindParam(':login', $this->login);
-            $stmt->bindParam(':pswd', $this->pswd);
+            $stmt->bindParam(
+                ':pswd',
+                $this->hash($this->pswd)
+            );
             $stmt->bindParam(':admin', $this->admin, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (\Exception $e) {

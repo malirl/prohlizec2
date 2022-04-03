@@ -47,7 +47,7 @@ final class Page extends BaseDBPage
                     $this->key = new KeyModel();
                     // stavajici klice odeber
                     KeyModel::deleteById($this->employee->employee_id);
-                    
+
                     // pridej ty, ktery mas
                     foreach ($this->employee->keys as $key => $room_id) {
                         if (!$this->key->insert($this->employee->employee_id, (int)$room_id)) {
@@ -116,7 +116,7 @@ final class Page extends BaseDBPage
         $getRooms = RoomModel::getAll();
         while ($row = $getRooms->fetch()) {
             $rooms[$row->room_id] = [
-            id => $row->room_id,
+            room_id => $row->room_id,
             name => $row->name
             ];
         }
@@ -128,7 +128,7 @@ final class Page extends BaseDBPage
         array_unshift(
             $rooms,
             [
-            id => $this->employee->room,
+            room_id => $this->employee->room,
             name => RoomModel::getById($this->employee->room)[name]
             ]
         );
