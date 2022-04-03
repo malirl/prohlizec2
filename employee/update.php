@@ -45,6 +45,10 @@ final class Page extends BaseDBPage
             if ($this->employee->validate()) {
                 if ($this->employee->update()) {
                     $this->key = new KeyModel();
+                    // stavajici klice odeber
+                    KeyModel::deleteById($this->employee->employee_id);
+                    
+                    // pridej ty, ktery mas
                     foreach ($this->employee->keys as $key => $room_id) {
                         if (!$this->key->insert($this->employee->employee_id, (int)$room_id)) {
                             $this->redirect(self::RESULT_FAIL);

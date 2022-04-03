@@ -109,7 +109,7 @@
 
             {{#update}}
             <label for="keysToAdd">Klíče k přidání</label>
-            <select name="keysToAdd[]" id="keysToAdd" class="form-select" size="15" id="choices-multiple-remove-button" multiple>
+            <select name="roomsForKeys[]" id="keysToAdd" class="form-select" size="15" id="choices-multiple-remove-button" multiple>
               {{#employee.keys}}
                 <option value="{{id}}" {{#selected}}selected{{/selected}}>{{name}}</option>
                 {{/employee.keys}}

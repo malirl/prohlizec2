@@ -23,19 +23,6 @@ class KeyModel
         }
     }
 
-    public function update() : bool
-    {
-        // $sql = "UPDATE room SET name=:name, no=:no, phone=:phone WHERE room_id=:room_id";
-        //
-        // $stmt = DB::getConnection()->prepare($sql);
-        // $stmt->bindParam(':room_id', $this->room_id);
-        // $stmt->bindParam(':name', $this->name);
-        // $stmt->bindParam(':no', $this->no);
-        // $stmt->bindParam(':phone', $this->phone);
-        //
-        // return $stmt->execute();
-        return false;
-    }
 
     public function getByEmployeeId($employeeId)
     {
@@ -52,11 +39,11 @@ class KeyModel
         return $stmt;
     }
 
-    public function deleteById(int $key_id) : bool
+    public function deleteById(int $employee_id) : bool
     {
-        $sql = "DELETE FROM key WHERE key_id=:key_id";
+        $sql = "DELETE FROM `key` WHERE ((`employee` = :employee_id))";
         $stmt = DB::getConnection()->prepare($sql);
-        $stmt->bindParam(':key_id', $key_id);
+        $stmt->bindParam(':employee_id', $employee_id);
         return $stmt->execute();
     }
 
