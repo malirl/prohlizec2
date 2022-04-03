@@ -96,6 +96,19 @@ class RoomModel
     }
 
 
+    public function exists($roomId)
+    {
+        if (!is_numeric($roomId)) {
+            return false;
+        }
+
+        $stmt = DB::getConnection()->prepare("SELECT room_id FROM room WHERE room_id=:room_id");
+        $stmt->bindParam(':room_id', $roomId);
+        $stmt->execute();
+        return (bool) $stmt->fetch();
+    }
+
+
     public static function getFromPost() : self
     {
         $room = new self();

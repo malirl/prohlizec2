@@ -102,6 +102,18 @@ class EmployeeModel
         }
     }
 
+    public function exists($employee_id)
+    {
+        if (!is_numeric($employee_id)) {
+            return false;
+        }
+
+        $stmt = DB::getConnection()->prepare("SELECT employee_id FROM employee WHERE employee_id=:employee_id");
+        $stmt->bindParam(':employee_id', $employee_id);
+        $stmt->execute();
+        return (bool) $stmt->fetch();
+    }
+
 
     public function getById($employee_id = null)
     {

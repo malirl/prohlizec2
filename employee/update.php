@@ -26,8 +26,6 @@ final class Page extends BaseDBPage
         parent::setUp();
         $this->getState();
 
-
-
         $this->employee = EmployeeModel::getFromPost();
 
         if ($this->state === self::STATE_REPORT_RESULT) {
@@ -39,9 +37,9 @@ final class Page extends BaseDBPage
             return;
         }
 
-        if ($this->state === self::STATE_DATA_SENT) {
+        $this->employee = EmployeeModel::getFromPost();
 
-            $this->employee = EmployeeModel::getFromPost();
+        if ($this->state === self::STATE_DATA_SENT) {
             if ($this->employee->validate()) {
                 if ($this->employee->update()) {
                     $this->key = new KeyModel();
@@ -88,7 +86,9 @@ final class Page extends BaseDBPage
 
     private function getState() : void
     {
-        //je už hotovo?
+
+
+
         $result = filter_input(INPUT_GET, "result", FILTER_VALIDATE_INT);
         if ($result === self::RESULT_SUCCESS) {
             $this->state = self::STATE_REPORT_RESULT;
@@ -99,6 +99,15 @@ final class Page extends BaseDBPage
             $this->result = self::RESULT_FAIL;
             return;
         }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'
+            && !EmployeeModel::exists($_POST["employee_id"])
+            || ($_SERVER['REQUEST_METHOD'] === 'GET'
+            && !EmployeeModel::exists($_GET["employee_id"]))
+        ) {
+            exit;
+        }
+
 
         //byl odeslán formulář
         $action = filter_input(INPUT_POST, "action");

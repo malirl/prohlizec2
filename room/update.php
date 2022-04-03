@@ -26,6 +26,8 @@ final class Page extends BaseDBPage
         parent::setUp();
         $this->getState();
 
+
+
         if ($this->state === self::STATE_REPORT_RESULT) {
             if ($this->result === self::RESULT_SUCCESS) {
                 $this->title = "Room updated";
@@ -99,6 +101,12 @@ final class Page extends BaseDBPage
             $this->state = self::STATE_REPORT_RESULT;
             $this->result = self::RESULT_FAIL;
             return;
+        }
+
+        if (!RoomModel::exists($_GET["room_id"])
+            && !RoomModel::exists($_POST["room_id"])
+        ) {
+            exit;
         }
 
         //byl odeslán formulář
