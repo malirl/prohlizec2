@@ -75,7 +75,7 @@
               <label for="changePswd">
                 změnit heslo
               </label>
-              <input type="checkbox" id="changePswd" class="form-check-input" onclick="document.getElementById('pswd').disabled = !document.getElementById('pswd').disabled; document.getElementById('changePswd').value = (document.getElementById('changePswd').value) == 'false' ? true : false;" name="setPswd" value="false" {{^employee.admin}}checked{{/employee.admin}}>
+              <input type="checkbox" id="changePswd" class="form-check-input" onclick="document.getElementById('pswd').disabled = !document.getElementById('pswd').disabled; document.getElementById('changePswd').value = (document.getElementById('changePswd').value) == 'false' ? true : false;" name="setPswd" value="false">
 
               <input id="pswd" name="pswd" class="form-control" type="password" value="{{employee.pswd}}" disabled/>
               {{#errors.pswd}}
