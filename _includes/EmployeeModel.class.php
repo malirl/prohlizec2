@@ -83,7 +83,8 @@ class EmployeeModel
     public function update($pswdSave) : bool
     {
         try {
-            $sql = "UPDATE employee SET name=:name, surname=:surname, job=:job, wage=:wage, room=:room, login=:login, {($pswdSave) ? 'pswd' : ''}=:pswd, admin=:admin WHERE employee_id=:employee_id";
+            $pswd = ($pswdSave) ? ", pswd=:pswd" : "";
+            $sql = "UPDATE employee SET name=:name, surname=:surname, job=:job, wage=:wage, room=:room, login=:login, admin=:admin" . $pswd . " WHERE employee_id=:employee_id";
             $stmt = DB::getConnection()->prepare($sql);
             $stmt->bindParam(':employee_id', $this->employee_id);
             $stmt->bindParam(':name', $this->name);
@@ -92,10 +93,12 @@ class EmployeeModel
             $stmt->bindParam(':wage', $this->wage);
             $stmt->bindParam(':room', $this->room);
             $stmt->bindParam(':login', $this->login);
-            $stmt->bindParam(
-                ':pswd',
-                $this->hash($this->pswd)
-            );
+            if ($pswdSave) {
+                $stmt->bindParam(
+                    ':pswd',
+                    $this->hash($this->pswd)
+                );
+            }
             $stmt->bindParam(':admin', $this->admin, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (\Exception $e) {
