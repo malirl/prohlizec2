@@ -1,2 +1,2 @@
-Každá stránka prohlížeče volá v konstruktoru potomka BaseDBPage a nastavuje OPERATION:EDIT/OPERATION_VIEW/OPERATION_NONE atd. Pokud není předán parametr, bere se v úvahu OPERATION_VIEW. Pokud nemá uživatel daný přístup, stránka se mu nevyrenderuje ani cokoli jinýho (neprovede se mazání, editace..), a přesměruje ho na login page.
+Každá stránka prohlížeče volá v konstruktoru rodiče BaseDBPage a nastavuje OPERATION:EDIT/OPERATION_VIEW/OPERATION_NONE atd. Pokud není předán parametr, bere se v úvahu OPERATION_VIEW. Pokud nemá uživatel daný přístup, stránka se mu nevyrenderuje ani cokoli jinýho (neprovede se mazání, editace..), a přesměruje ho na login page.
 <br>Mazání funguje, když je nastaveno CASCADE cizích klíčů v tabulke key.
