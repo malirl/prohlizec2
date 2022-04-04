@@ -49,7 +49,7 @@ class EmployeeModel
     public function insert() : bool
     {
         try {
-            $sql = "INSERT INTO employee (name, surname, job, wage, room, login, {($this->pswdSave) ? 'pswd' : ''}, admin) VALUES (:name, :surname, :job, :wage, :room, :login, :pswd, :admin)";
+            $sql = "INSERT INTO employee (name, surname, job, wage, room, login, pswd, admin) VALUES (:name, :surname, :job, :wage, :room, :login, :pswd, :admin)";
 
             $stmt = DB::getConnection()->prepare($sql);
             $stmt->bindParam(':name', $this->name);
@@ -80,10 +80,10 @@ class EmployeeModel
         }
     }
 
-    public function update() : bool
+    public function update($pswdSave) : bool
     {
         try {
-            $sql = "UPDATE employee SET name=:name, surname=:surname, job=:job, wage=:wage, room=:room, login=:login, pswd=:pswd, admin=:admin WHERE employee_id=:employee_id";
+            $sql = "UPDATE employee SET name=:name, surname=:surname, job=:job, wage=:wage, room=:room, login=:login, {($pswdSave) ? 'pswd' : ''}=:pswd, admin=:admin WHERE employee_id=:employee_id";
             $stmt = DB::getConnection()->prepare($sql);
             $stmt->bindParam(':employee_id', $this->employee_id);
             $stmt->bindParam(':name', $this->name);
