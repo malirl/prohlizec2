@@ -36,12 +36,10 @@ final class Page extends BaseDBPage
             }
             return;
         }
-
-        $this->employee = EmployeeModel::getFromPost();
-
+        
         if ($this->state === self::STATE_DATA_SENT) {
             if ($this->employee->validate()) {
-                if ($this->employee->update()) {
+                if ($this->employee->update($this->pswdSave)) {
                     $this->key = new KeyModel();
                     // stavajici klice odeber
                     KeyModel::deleteById($this->employee->employee_id);
@@ -86,9 +84,6 @@ final class Page extends BaseDBPage
 
     private function getState() : void
     {
-
-
-
         $result = filter_input(INPUT_GET, "result", FILTER_VALIDATE_INT);
         if ($result === self::RESULT_SUCCESS) {
             $this->state = self::STATE_REPORT_RESULT;
@@ -113,6 +108,7 @@ final class Page extends BaseDBPage
         $action = filter_input(INPUT_POST, "action");
         if ($action === "update") {
             $this->state = self::STATE_DATA_SENT;
+            $this->pswdSave = filter_var($_POST["setPswd"], FILTER_VALIDATE_BOOLEAN);
             return;
         }
 

@@ -71,9 +71,13 @@
               {{/errors.login}}
             </div>
             <div class="my-2">
-              <label for="pswd">pswd</label>
-              <input id="pswd" name="pswd" class="form-control" type="password" value="{{employee.pswd}}" />
 
+              <label for="changePswd">
+                změnit heslo
+              </label>
+              <input type="checkbox" id="changePswd" class="form-check-input" onclick="document.getElementById('pswd').disabled = !document.getElementById('pswd').disabled; document.getElementById('changePswd').value = (document.getElementById('changePswd').value) == 'false' ? true : false;" name="setPswd" value="false" {{^employee.admin}}checked{{/employee.admin}}>
+
+              <input id="pswd" name="pswd" class="form-control" type="password" value="{{employee.pswd}}" disabled/>
               {{#errors.pswd}}
                 <div class="form-text text-danger">{{errors.pswd}}</div>
               {{/errors.pswd}}
@@ -86,7 +90,7 @@
               </div>
 
               <div class="form-check">
-                <label><input type="radio" class="form-check-input"name="user" value="1" {{#employee.admin}}checked{{/employee.admin}}>admin</label>
+                <label><input type="radio" class="form-check-input" name="user" value="1" {{#employee.admin}}checked{{/employee.admin}}>admin</label>
               </div>
 
 
@@ -99,21 +103,21 @@
           <div class="col-sm">
 
             {{#create}}
-            <label for="rooms">Klíče</label>
-            <select name="roomsForKeys[]" id="rooms" class="form-select" size="15" id="choices-multiple-remove-button" multiple>
-              {{#keys}}
-                <option value="{{room_id}}">{{name}}</option>
-              {{/keys}}
-            </select>
+              <label for="rooms">Klíče</label>
+              <select name="roomsForKeys[]" id="rooms" class="form-select" size="15" id="choices-multiple-remove-button" multiple>
+                {{#keys}}
+                  <option value="{{room_id}}">{{name}}</option>
+                {{/keys}}
+              </select>
             {{/create}}
 
             {{#update}}
-            <label for="keysToAdd">Klíče</label>
-            <select name="roomsForKeys[]" id="keysToAdd" class="form-select" size="15" id="choices-multiple-remove-button" multiple>
-              {{#employee.keys}}
-                <option value="{{id}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+              <label for="keysToAdd">Klíče</label>
+              <select name="roomsForKeys[]" id="keysToAdd" class="form-select" size="15" id="choices-multiple-remove-button" multiple>
+                {{#employee.keys}}
+                  <option value="{{id}}" {{#selected}}selected{{/selected}}>{{name}}</option>
                 {{/employee.keys}}
-            </select>
+              </select>
 
 
 

@@ -49,7 +49,8 @@ class EmployeeModel
     public function insert() : bool
     {
         try {
-            $sql = "INSERT INTO employee (name, surname, job, wage, room, login, pswd, admin) VALUES (:name, :surname, :job, :wage, :room, :login, :pswd, :admin)";
+            $sql = "INSERT INTO employee (name, surname, job, wage, room, login, {($this->pswdSave) ? 'pswd' : ''}, admin) VALUES (:name, :surname, :job, :wage, :room, :login, :pswd, :admin)";
+
             $stmt = DB::getConnection()->prepare($sql);
             $stmt->bindParam(':name', $this->name);
             $stmt->bindParam(':surname', $this->surname);
@@ -184,7 +185,7 @@ class EmployeeModel
         $isOk = true;
 
         $notEmpty = [
-        "name","surname","job","wage","room","login","pswd"
+        "name","surname","job","wage","room","login"
         ];
 
         $numsOnly = [
