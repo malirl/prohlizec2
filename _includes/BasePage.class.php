@@ -59,6 +59,7 @@ abstract class BasePage
     public function redirectToLoginPage()
     {
         header("Location:". $_SERVER['DOCUMENT_ROOT']."/login/login.php");
+        exit;
     }
 
     protected function redirect(int $result) : void

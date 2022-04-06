@@ -218,6 +218,9 @@ class EmployeeModel
             $isOk = false;
         }
 
+        
+
+
         $this->validationErrors = $errors;
         return $isOk;
     }

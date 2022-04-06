@@ -71,13 +71,13 @@
               {{/errors.login}}
             </div>
             <div class="my-2">
-
+{{#update}}
               <label for="changePswd">
                 změnit heslo
               </label>
               <input type="checkbox" id="changePswd" class="form-check-input" onclick="document.getElementById('pswd').disabled = !document.getElementById('pswd').disabled; document.getElementById('changePswd').value = (document.getElementById('changePswd').value) == 'false' ? true : false;" name="setPswd" value="false">
-
-              <input id="pswd" name="pswd" class="form-control" type="password" value="{{employee.pswd}}" disabled/>
+{{/update}}
+              <input id="pswd" name="pswd" class="form-control" type="password" value="{{employee.pswd}}" {{#update}}disabled{{/update}}/>
               {{#errors.pswd}}
                 <div class="form-text text-danger">{{errors.pswd}}</div>
               {{/errors.pswd}}
