@@ -210,6 +210,12 @@ class EmployeeModel
             }
         }
 
+
+        if ($this->wage < 0) {
+            $errors["wage"] = "záporná mzda";
+            $isOk = false;
+        }
+
         if (array_filter($this->keys, "is_numeric") !== $this->keys) {
             $isOk = false;
         }
@@ -218,7 +224,7 @@ class EmployeeModel
             $isOk = false;
         }
 
-        
+
 
 
         $this->validationErrors = $errors;

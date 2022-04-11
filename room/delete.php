@@ -65,7 +65,7 @@ final class Page extends BaseDBPage
             } else {
                 return $this->m->render(
                     "reportFail",
-                    ["data"=>"Room deletion failed. Please contact adiministrator or try again later.",
+                    ["data"=>"Nedovolím vymazat, protože tuto místnost má někdo jako domovskou.",
                     "link" => "./",
                     "name" => "room list"
                     ]
