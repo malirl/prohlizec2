@@ -90,6 +90,13 @@ final class Page extends BaseDBPage
             return;
         }
 
+        // if ($_SERVER['REQUEST_METHOD'] === 'GET'
+        //     && !EmployeeModel::exists($_GET["employee_id"])
+        // ) {
+        //   exit;
+        // }
+
+
         $this->state = self::STATE_DELETE_REQUESTED;
     }
 

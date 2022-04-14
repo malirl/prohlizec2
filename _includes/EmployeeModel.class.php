@@ -213,6 +213,7 @@ class EmployeeModel
 
         if ($this->wage < 0) {
             $errors["wage"] = "záporná mzda";
+            $this->params["wage"] = null;
             $isOk = false;
         }
 

@@ -11,6 +11,7 @@ final class Page extends BaseDBPage
 
     const RESULT_SUCCESS = 1;
     const RESULT_FAIL = 2;
+    const RESULT_EMPLOYEE_NOT_FOUND = 3;
 
     private EmployeeModel $employee;
     private int $state, $result;
@@ -18,7 +19,6 @@ final class Page extends BaseDBPage
     public function __construct()
     {
         parent::__construct(self::OPERATION_EDIT);
-        $this->title = "Vytvoř zaměstnance";
     }
 
     protected function setUp(): void
@@ -29,14 +29,21 @@ final class Page extends BaseDBPage
         $this->employee = EmployeeModel::getFromPost();
 
         if ($this->state === self::STATE_REPORT_RESULT) {
-            if ($this->result === self::RESULT_SUCCESS) {
-                $this->title = "Zaměstnanec vytvořen";
-            } else {
-                $this->title = "Vytvoření zaměstnance selhalo";
+            switch ($this->result) {
+            case self::RESULT_SUCCESS:
+                $this->title = "Zaměstnanec aktualizován";
+                return;
+            case self::RESULT_FAIL:
+                $this->title = "Aktualizace zaměstnance selhalo";
+                return;
+            case self::RESULT_EMPLOYEE_NOT_FOUND:
+                $this->title = "Zaměstnanec neexistuje";
+                return;
+            default:
+                exit;
             }
-            return;
         }
-        
+
         if ($this->state === self::STATE_DATA_SENT) {
             if ($this->employee->validate()) {
                 if ($this->employee->update($this->pswdSave)) {
@@ -85,22 +92,31 @@ final class Page extends BaseDBPage
     private function getState() : void
     {
         $result = filter_input(INPUT_GET, "result", FILTER_VALIDATE_INT);
-        if ($result === self::RESULT_SUCCESS) {
+
+        switch ($result) {
+        case self::RESULT_SUCCESS:
             $this->state = self::STATE_REPORT_RESULT;
             $this->result = self::RESULT_SUCCESS;
             return;
-        } elseif ($result === self::RESULT_FAIL) {
+        case self::RESULT_FAIL:
             $this->state = self::STATE_REPORT_RESULT;
             $this->result = self::RESULT_FAIL;
             return;
+        case self::RESULT_EMPLOYEE_NOT_FOUND:
+            $this->state = self::STATE_REPORT_RESULT;
+            $this->result = self::RESULT_EMPLOYEE_NOT_FOUND;
+            return;
+        default:
+            break;
         }
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST'
             && !EmployeeModel::exists($_POST["employee_id"])
             || ($_SERVER['REQUEST_METHOD'] === 'GET'
             && !EmployeeModel::exists($_GET["employee_id"]))
         ) {
-            exit;
+            $this->redirect(self::RESULT_EMPLOYEE_NOT_FOUND);
         }
 
 
@@ -126,8 +142,6 @@ final class Page extends BaseDBPage
             ];
         }
 
-
-
         unset($rooms[$this->employee->room]);
 
         array_unshift(
@@ -152,7 +166,8 @@ final class Page extends BaseDBPage
             );
 
         } elseif ($this->state === self::STATE_REPORT_RESULT) {
-            if ($this->result === self::RESULT_SUCCESS) {
+            switch ($this->result) {
+            case self::RESULT_SUCCESS:
                 return $this->m->render(
                     "reportSuccess",
                     ["data"=>"Employee updated successfully",
@@ -160,7 +175,7 @@ final class Page extends BaseDBPage
                     "name" => "employee list"
                     ]
                 );
-            } else {
+            case self::RESULT_FAIL:
                 return $this->m->render(
                     "reportFail",
                     ["data"=>"Employee update failed. Please contact adiministrator or try again later.",
@@ -168,11 +183,19 @@ final class Page extends BaseDBPage
                     "name" => "employee list"
                     ]
                 );
+            case self::RESULT_EMPLOYEE_NOT_FOUND:
+                return $this->m->render(
+                    "reportFail",
+                    ["data"=>"Employee not found.",
+                    "link" => "./",
+                    "name" => "employee list"
+                    ]
+                );
+            default:
+                exit;
             }
-
         }
     }
-
 }
 
 (new Page())->render();
